@@ -4,11 +4,11 @@ Description: Serverless patterns - AppSync to DynamoDB
 
 Resources:
   # Define a DynamoDB table
-  CustomerNPSTable:
+  DynamoDBNotesTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       PrimaryKey:
-        Name: id
+        Name: NoteId
         Type: String
 
   # AppSync Role
