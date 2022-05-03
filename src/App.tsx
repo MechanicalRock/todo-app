@@ -22,7 +22,7 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const link = from([
   errorLink,
   new HttpLink({
-    uri: "https://nzbeyfg4inc75ptui6o3jtjkna.appsync-api.ap-southeast-2.amazonaws.com/graphql",
+    uri: "https://sntbqhqgpzenxmlkr23cnzomoi.appsync-api.ap-southeast-2.amazonaws.com/graphql",
   }),
 ]);
 
@@ -32,7 +32,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      "x-api-key": "da2-d3enmtsimvcfxjeodrksxz2bfq",
+      "x-api-key": "da2-shmxhribhffwfkc53dmkusepqm",
     },
   };
 });
@@ -43,28 +43,9 @@ const client = new ApolloClient({
 });
 
 export default function App() {
-  // useEffect(() => {
-  //   fetch(
-  //     `https://nzbeyfg4inc75ptui6o3jtjkna.appsync-api.ap-southeast-2.amazonaws.com/graphql`,
-  //     {
-  //       method: "POST",
-  //       headers: {
-  //         "x-api-key": "da2-d3enmtsimvcfxjeodrksxz2bfq",
-  //         "Content-Type": "application/json",
-  //       },
-  //       body: JSON.stringify({
-  //         query: '{getNote(NoteId: "1") {title, content}}',
-  //         variables: null,
-  //         operationsName: null,
-  //       }),
-  //     }
-  //   )
-  //     .then((res) => res.json())
-  //     .then((res) => console.log(res.data));
-  // }, []);
-
   return (
     <ApolloProvider client={client}>
+      <GetData />
       <PutData />
     </ApolloProvider>
   );

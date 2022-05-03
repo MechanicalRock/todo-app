@@ -1,17 +1,16 @@
 import {gql} from '@apollo/client'
 
 export const PUT_DATA = gql`
-mutation  saveNote($content: String!, $NoteId: ID!, $title: String!) {
-  saveNote(
-    NoteId: $NoteId
-    content: $content
-    title: $title
+mutation  saveFeedback($rating: Int!, $id: ID!, $reason: String!) {
+  saveFeedback(
+    id: $id
+    rating: $rating
+    reason: $reason
   ){
-      NoteId
-      content
-      title
+      id
+      rating
+      reason
   }
-  
 }
 
 `

@@ -4,11 +4,11 @@ Description: Serverless patterns - AppSync to DynamoDB
 
 Resources:
   # Define a DynamoDB table
-  DynamoDBNotesTable:
+  CustomerFeedbackTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       PrimaryKey:
-        Name: NoteId
+        Name: id
         Type: String
 
   # AppSync Role
@@ -37,13 +37,13 @@ Resources:
                   - dynamodb:UpdateItem
                   - dynamodb:Query
                   - dynamodb:Scan
-                Resource: !GetAtt DynamoDBNotesTable.Arn
+                Resource: !GetAtt CustomerFeedbackTable.Arn
 
   # AppSync API - The GraphQL API for the Notes App
   AppSyncApi:
     Type: AWS::AppSync::GraphQLApi
     Properties:
-      Name: NotesApi
+      Name: FeedbackApi
       XrayEnabled: true
       AuthenticationType: API_KEY
 
@@ -59,22 +59,22 @@ Resources:
     Properties:
       ApiId: !GetAtt AppSyncApi.ApiId
       Definition: |
-        type Note {
-          NoteId: ID!
-          title: String
-          content: String
+        type Feedback {
+          id: ID!
+          rating: Int
+          reason: String
         }
-        type PaginatedNotes {
-          notes: [Note!]!
+        type PaginatedFeedback {
+          feedback: [Feedback!]!
           nextToken: String
         }
         type Query {
-          allNotes(limit: Int, nextToken: String): PaginatedNotes!
-          getNote(NoteId: ID!): Note
+          getAllFeedback(limit: Int, nextToken: String): PaginatedFeedback!
+          getFeedback(id: ID!): Feedback
         }
         type Mutation {
-          saveNote(NoteId: ID!, title: String!, content: String!): Note
-          deleteNote(NoteId: ID!): Note
+          saveFeedback(id: ID!, rating: Int!, reason: String!): Feedback
+          deleteFeedback(id: ID!): Feedback
         }
         type Schema {
           query: Query
@@ -82,27 +82,27 @@ Resources:
         }
 
   # AppSync Data Source for DynamoDB
-  AppSyncNotesTableDataSource:
+  AppSyncCustomerFeedbackDataSource:
     Type: AWS::AppSync::DataSource
     Properties:
-      Name: NotesDataSource
+      Name: CustomerFeedbackDataSource
       ApiId: !GetAtt AppSyncApi.ApiId
-      Description: "The Notes Table AppSync Data Source"
+      Description: "The Customer Feedback Table AppSync Data Source"
       Type: AMAZON_DYNAMODB
       ServiceRoleArn: !GetAtt DynamoDBRole.Arn
       DynamoDBConfig:
-        TableName: !Ref DynamoDBNotesTable
+        TableName: !Ref CustomerFeedbackTable
         AwsRegion: !Sub ${AWS::Region}
 
-  # Resolver: Query - Get All Notes
-  AppSyncAllNotesQueryResolver:
+  # Resolver: Query - Get All Feedback
+  AppSyncGetAllFeedbackQueryResolver:
     Type: AWS::AppSync::Resolver
     DependsOn: AppSyncSchema
     Properties:
       ApiId: !GetAtt AppSyncApi.ApiId
       TypeName: Query
-      FieldName: allNotes
-      DataSourceName: !GetAtt AppSyncNotesTableDataSource.Name
+      FieldName: getAllFeedback
+      DataSourceName: !GetAtt AppSyncCustomerFeedbackDataSource.Name
       RequestMappingTemplate: |
         {
           "version": "2017-02-28",
@@ -112,67 +112,67 @@ Resources:
         }
       ResponseMappingTemplate: |
         {
-          "notes": $util.toJson($ctx.result.items),
+          "feedback": $util.toJson($ctx.result.items),
           "nextToken": $util.toJson(${ctx.args.nextToken})
         }
 
-  # Resolver: Query - get one note
-  AppSyncGetNoteQueryResolver:
+  # Resolver: Query - get one Feedback record
+  AppSyncGetFeedbackQueryResolver:
     Type: AWS::AppSync::Resolver
     DependsOn: AppSyncSchema
     Properties:
       ApiId: !GetAtt AppSyncApi.ApiId
       TypeName: Query
-      FieldName: getNote
-      DataSourceName: !GetAtt AppSyncNotesTableDataSource.Name
+      FieldName: getFeedback
+      DataSourceName: !GetAtt AppSyncCustomerFeedbackDataSource.Name
       RequestMappingTemplate: |
         {
           "version": "2018-05-29",
           "operation": "GetItem",
           "key": {
-            "NoteId": $util.dynamodb.toDynamoDBJson($ctx.args.NoteId)
+            "id": $util.dynamodb.toDynamoDBJson($ctx.args.id)
           }
         }
       ResponseMappingTemplate: "$util.toJson($ctx.result)"
 
-  # Resolver: Mutation - Save note
-  AppSyncSaveNoteMutationResolver:
+  # Resolver: Mutation - Save Feedback
+  AppSyncSaveFeedbackMutationResolver:
     Type: AWS::AppSync::Resolver
     DependsOn: AppSyncSchema
     Properties:
       ApiId: !GetAtt AppSyncApi.ApiId
       TypeName: Mutation
-      FieldName: saveNote
-      DataSourceName: !GetAtt AppSyncNotesTableDataSource.Name
+      FieldName: saveFeedback
+      DataSourceName: !GetAtt AppSyncCustomerFeedbackDataSource.Name
       RequestMappingTemplate: |
         {
           "version": "2018-05-29",
           "operation": "PutItem",
           "key": {
-            "NoteId": $util.dynamodb.toDynamoDBJson($ctx.args.NoteId)
+            "id": $util.dynamodb.toDynamoDBJson($ctx.args.id)
           },
           "attributeValues": {
-            "title": $util.dynamodb.toDynamoDBJson($ctx.args.title),
-            "content": $util.dynamodb.toDynamoDBJson($ctx.args.content)
+            "rating": $util.dynamodb.toDynamoDBJson($ctx.args.rating),
+            "reason": $util.dynamodb.toDynamoDBJson($ctx.args.reason)
           }
         }
       ResponseMappingTemplate: "$util.toJson($ctx.result)"
 
   # Resolver: Mutations - Delete note
-  AppSyncDeleteNoteMutationResolver:
+  AppSyncDeleteFeedbackMutationResolver:
     Type: AWS::AppSync::Resolver
     DependsOn: AppSyncSchema
     Properties:
       ApiId: !GetAtt AppSyncApi.ApiId
       TypeName: Mutation
-      FieldName: deleteNote
-      DataSourceName: !GetAtt AppSyncNotesTableDataSource.Name
+      FieldName: deleteFeedback
+      DataSourceName: !GetAtt AppSyncCustomerFeedbackDataSource.Name
       RequestMappingTemplate: |
         {
           "version": "2018-05-29",
           "operation": "DeleteItem",
           "key": {
-            "NoteId": $util.dynamodb.toDynamoDBJson($ctx.args.NoteId)
+            "id": $util.dynamodb.toDynamoDBJson($ctx.args.id)
           }
         }
       ResponseMappingTemplate: "$util.toJson($ctx.result)"

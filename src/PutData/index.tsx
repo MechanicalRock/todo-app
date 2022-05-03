@@ -3,14 +3,14 @@ import { PUT_DATA } from "../GraphQL/mutations";
 import { useMutation } from "@apollo/client";
 
 export default function PutData() {
-  const [saveNote, { error }] = useMutation(PUT_DATA);
+  const [saveFeedback, { error }] = useMutation(PUT_DATA);
 
   const addData = () => {
-    saveNote({
+    saveFeedback({
       variables: {
-        NoteId: 101,
-        title: "Another test",
-        content: "Another content",
+        id: 2,
+        rating: 10,
+        reason: "Amazing Service",
       },
     });
     if (error) {
