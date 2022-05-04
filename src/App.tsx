@@ -10,8 +10,9 @@ import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
 import GetData from "./GetData";
 import PutData from "./PutData";
+import Main from "./Pages/Main";
 
-const errorLink = onError(({ graphQLErrors, networkError }) => {
+const errorLink = onError(({ graphQLErrors }) => {
   if (graphQLErrors) {
     graphQLErrors.map(({ message }) => {
       alert(`Graphql error ${message} `);
@@ -22,17 +23,15 @@ const errorLink = onError(({ graphQLErrors, networkError }) => {
 const link = from([
   errorLink,
   new HttpLink({
-    uri: "https://sntbqhqgpzenxmlkr23cnzomoi.appsync-api.ap-southeast-2.amazonaws.com/graphql",
+    uri: "https://tyrr2q2eojgalbtbd7svghe26q.appsync-api.ap-southeast-2.amazonaws.com/graphql ",
   }),
 ]);
 
 const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  // return the headers to the context so httpLink can read them
   return {
     headers: {
       ...headers,
-      "x-api-key": "da2-shmxhribhffwfkc53dmkusepqm",
+      "x-api-key": "da2-ql4hjmh2z5dlhklbg5w73qyncm",
     },
   };
 });
@@ -45,8 +44,7 @@ const client = new ApolloClient({
 export default function App() {
   return (
     <ApolloProvider client={client}>
-      <GetData />
-      <PutData />
+      <Main />
     </ApolloProvider>
   );
 }

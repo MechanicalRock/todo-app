@@ -73,7 +73,7 @@ Resources:
           getFeedback(id: ID!): Feedback
         }
         type Mutation {
-          saveFeedback(id: ID!, rating: Int!, reason: String!): Feedback
+          saveFeedback(rating: Int!, reason: String!): Feedback
           deleteFeedback(id: ID!): Feedback
         }
         type Schema {
@@ -149,11 +149,15 @@ Resources:
           "version": "2018-05-29",
           "operation": "PutItem",
           "key": {
-            "id": $util.dynamodb.toDynamoDBJson($ctx.args.id)
+            "id": $util.dynamodb.toDynamoDBJson($util.autoId())
           },
           "attributeValues": {
             "rating": $util.dynamodb.toDynamoDBJson($ctx.args.rating),
             "reason": $util.dynamodb.toDynamoDBJson($ctx.args.reason)
+          },
+          "condition": {
+            "expression": "attribute_not_exists(#id)",
+            "expressionNames": {"#id": "id"},
           }
         }
       ResponseMappingTemplate: "$util.toJson($ctx.result)"
