@@ -8,9 +8,9 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
-import GetData from "./GetData";
-import PutData from "./PutData";
 import Main from "./Pages/Main";
+import { Route, Routes } from "react-router-dom";
+import Admin from "./Pages/Admin";
 
 const errorLink = onError(({ graphQLErrors }) => {
   if (graphQLErrors) {
@@ -44,7 +44,10 @@ const client = new ApolloClient({
 export default function App() {
   return (
     <ApolloProvider client={client}>
-      <Main />
+      <Routes>
+        <Route path="/" element={<Main />}></Route>
+        <Route path="/admin" element={<Admin />}></Route>
+      </Routes>
     </ApolloProvider>
   );
 }
