@@ -23,7 +23,7 @@ const errorLink = onError(({ graphQLErrors }) => {
 const link = from([
   errorLink,
   new HttpLink({
-    uri: "https://tyrr2q2eojgalbtbd7svghe26q.appsync-api.ap-southeast-2.amazonaws.com/graphql ",
+    uri: "https://iifyruoomnh2niepkwubd6bcue.appsync-api.ap-southeast-2.amazonaws.com/graphql  ",
   }),
 ]);
 
@@ -31,7 +31,7 @@ const authLink = setContext((_, { headers }) => {
   return {
     headers: {
       ...headers,
-      "x-api-key": "da2-ql4hjmh2z5dlhklbg5w73qyncm",
+      "x-api-key": "da2-atwwitd5fzflzdkq5r5y7hwsgm",
     },
   };
 });

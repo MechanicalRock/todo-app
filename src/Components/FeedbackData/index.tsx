@@ -9,9 +9,14 @@ export default function FeedbackData() {
 
   useEffect(() => {
     setFeedback(data);
-    console.log(data);
+    if (error) {
+      console.log(error);
+    } else {
+      console.log(data);
+    }
   }, [data]);
 
+  console.log(data);
   return (
     <>
       <Grid item xs={12} textAlign={"center"}>

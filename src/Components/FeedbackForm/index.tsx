@@ -40,9 +40,6 @@ export default function FeedbackForm() {
     setRating(event.target.value);
   };
 
-  console.log(rating);
-  console.log(reason);
-
   return (
     <>
       {!submitted && (
