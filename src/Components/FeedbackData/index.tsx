@@ -3,20 +3,7 @@ import { Grid, Typography } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import { GET_DATA } from "../../GraphQL/queries";
 
-export default function FeedbackData() {
-  const { error, loading, data } = useQuery(GET_DATA);
-  const [feedback, setFeedback] = useState({});
-
-  useEffect(() => {
-    setFeedback(data);
-    if (error) {
-      console.log(error);
-    } else {
-      console.log(data);
-    }
-  }, [data]);
-
-  console.log(data);
+export default function FeedbackData(props: any) {
   return (
     <>
       <Grid item xs={12} textAlign={"center"}>

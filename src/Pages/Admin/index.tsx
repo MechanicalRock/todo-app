@@ -1,9 +1,26 @@
+import { useQuery } from "@apollo/client";
 import { Grid } from "@mui/material";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import FeedbackData from "../../Components/FeedbackData";
 import FeedbackForm from "../../Components/FeedbackForm";
+import FeedbackList from "../../Components/FeedbackList";
+import { GET_DATA } from "../../GraphQL/queries";
 
 export default function Admin() {
+  const { error, loading, data } = useQuery(GET_DATA);
+  const [feedback, setFeedback] = useState([{}]);
+
+  useEffect(() => {
+    if (data) {
+      setFeedback(data.getAllFeedback.feedback);
+    }
+    if (error) {
+      console.log(error);
+    }
+  }, [data]);
+
+  console.log(feedback);
+
   return (
     <>
       <Grid
@@ -18,7 +35,8 @@ export default function Admin() {
             sx={{ minWidth: "10vw" }}
             spacing={"20px"}
           >
-            <FeedbackData />
+            <FeedbackData data={feedback} />
+            <FeedbackList data={feedback} />
           </Grid>
         </Grid>
         <Grid item xs={12} sm={3}></Grid>
