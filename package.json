@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "@apollo/client": "^3.6.2",
+    "@aws-amplify/ui-react": "^2.16.1",
     "@emotion/react": "^11.9.0",
     "@emotion/styled": "^11.8.1",
     "@mui/icons-material": "^5.6.2",
@@ -15,6 +16,7 @@
     "@types/node": "^16.11.31",
     "@types/react": "^18.0.8",
     "@types/react-dom": "^18.0.0",
+    "aws-amplify": "^4.3.21",
     "graphql": "^16.4.0",
     "react": "^18.1.0",
     "react-dom": "^18.1.0",

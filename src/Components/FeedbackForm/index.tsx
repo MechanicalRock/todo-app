@@ -10,8 +10,10 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { Auth } from "aws-amplify";
 import React, { useState } from "react";
 import { PUT_DATA } from "../../GraphQL/mutations";
+import { useGlobalUserContext } from "../context";
 
 export default function FeedbackForm() {
   const [rating, setRating] = useState(0);
@@ -19,6 +21,10 @@ export default function FeedbackForm() {
   const [submitted, setSubmitted] = useState(false);
   const [saveFeedback, { error }] = useMutation(PUT_DATA);
   const [loading, setLoading] = useState(false);
+
+  const { user, setUser } = useGlobalUserContext();
+
+  console.log(user);
 
   const handleSubmit = () => {
     setLoading(true);
@@ -39,6 +45,15 @@ export default function FeedbackForm() {
   const handleClick = (event: { target: any }) => {
     setRating(event.target.value);
   };
+
+  async function signOut() {
+    try {
+      await Auth.signOut();
+      setUser(null);
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  }
 
   return (
     <>
@@ -109,6 +124,11 @@ export default function FeedbackForm() {
           <Grid item xs={12} textAlign={"center"} padding={"20px"}>
             <Button variant="contained" onClick={handleSubmit}>
               <Typography variant="body1">Submit</Typography>
+            </Button>
+          </Grid>
+          <Grid item xs={12} textAlign={"center"} padding={"20px"}>
+            <Button variant="contained" onClick={signOut}>
+              <Typography variant="body1">Sign out</Typography>
             </Button>
           </Grid>
         </>

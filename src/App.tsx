@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import {
   ApolloClient,
   ApolloProvider,
@@ -8,10 +8,10 @@ import {
 } from "@apollo/client";
 import { onError } from "@apollo/client/link/error";
 import { setContext } from "@apollo/client/link/context";
-import Main from "./Pages/Main";
-import { Route, Routes } from "react-router-dom";
-import Admin from "./Pages/Admin";
+import { UserContext } from "./Components/context";
+import Pages from "./Pages";
 
+// >>New - Configuring Auth Module
 const errorLink = onError(({ graphQLErrors }) => {
   if (graphQLErrors) {
     graphQLErrors.map(({ message }) => {
@@ -42,12 +42,13 @@ const client = new ApolloClient({
 });
 
 export default function App() {
+  const [user, setUser] = useState(null);
+
   return (
     <ApolloProvider client={client}>
-      <Routes>
-        <Route path="/" element={<Main />}></Route>
-        <Route path="/admin" element={<Admin />}></Route>
-      </Routes>
+      <UserContext.Provider value={{ user, setUser }}>
+        <Pages />
+      </UserContext.Provider>
     </ApolloProvider>
   );
 }
