@@ -7,7 +7,7 @@ export default function Main() {
     <>
       <Grid
         container
-        sx={{ marginLeft: "40px", marginRight: "40px", marginTop: "360px" }}
+        sx={{ marginLeft: "40px", marginRight: "40px", marginTop: "120px" }}
       >
         <Grid item xs={12} sm={3}></Grid>
         <Grid item xs={12} md={6}>

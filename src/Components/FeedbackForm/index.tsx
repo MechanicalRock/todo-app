@@ -127,9 +127,9 @@ export default function FeedbackForm() {
             </Button>
           </Grid>
           <Grid item xs={12} textAlign={"center"} padding={"20px"}>
-            <Button variant="contained" onClick={signOut}>
+            {/* <Button variant="contained" onClick={signOut}>
               <Typography variant="body1">Sign out</Typography>
-            </Button>
+            </Button> */}
           </Grid>
         </>
       )}
