@@ -7,7 +7,7 @@ import FeedbackList from "../../Components/FeedbackList";
 import { GET_DATA } from "../../GraphQL/queries";
 
 export default function Admin() {
-  const { error, loading, data } = useQuery(GET_DATA);
+  const { error, data } = useQuery(GET_DATA);
   const [feedback, setFeedback] = useState([{}]);
 
   useEffect(() => {
