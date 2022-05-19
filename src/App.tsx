@@ -25,7 +25,7 @@ export default function App() {
   const link = from([
     errorLink,
     new HttpLink({
-      uri: "https://iifyruoomnh2niepkwubd6bcue.appsync-api.ap-southeast-2.amazonaws.com/graphql  ",
+      uri: "https://iifyruoomnh2niepkwubd6bcue.appsync-api.ap-southeast-2.amazonaws.com/graphql ",
     }),
   ]);
 
@@ -33,7 +33,7 @@ export default function App() {
     return {
       headers: {
         ...headers,
-        Authorization: `${user?.Session}`,
+        Authorization: `${user.signInUserSession.accessToken.jwtToken}`,
       },
     };
   });

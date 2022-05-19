@@ -15,19 +15,19 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { setUser } = useGlobalUserContext();
+  const { user, setUser } = useGlobalUserContext();
 
   const handleSubmit = async (e: any) => {
     setLoading(true);
     try {
       const user = await Auth.signIn(email, password);
-
       console.log(user);
       setUser(user);
     } catch (error) {
       console.log(error);
     }
     setLoading(false);
+    // const newpassword = await Auth.completeNewPassword(user, password);
   };
 
   return (

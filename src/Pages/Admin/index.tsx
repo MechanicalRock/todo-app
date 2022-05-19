@@ -1,5 +1,6 @@
 import { useQuery } from "@apollo/client";
 import { Grid } from "@mui/material";
+import { Auth } from "aws-amplify";
 import React, { useEffect, useState } from "react";
 import FeedbackData from "../../Components/FeedbackData";
 import FeedbackForm from "../../Components/FeedbackForm";
@@ -18,8 +19,6 @@ export default function Admin() {
       console.log(error);
     }
   }, [data]);
-
-  console.log(feedback);
 
   return (
     <>
