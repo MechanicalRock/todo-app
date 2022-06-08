@@ -4,7 +4,7 @@ Description: Serverless patterns - AppSync to DynamoDB
 
 Resources:
   # Define a DynamoDB table
-  CustomerFeedbackTable:
+  TodoTable:
     Type: AWS::Serverless::SimpleTable
     Properties:
       PrimaryKey:
@@ -37,13 +37,13 @@ Resources:
                   - dynamodb:UpdateItem
                   - dynamodb:Query
                   - dynamodb:Scan
-                Resource: !GetAtt CustomerFeedbackTable.Arn
+                Resource: !GetAtt TodoTable.Arn
 
   # AppSync API - The GraphQL API for the Notes App
   AppSyncApi:
     Type: AWS::AppSync::GraphQLApi
     Properties:
-      Name: FeedbackApi
+      Name: TodoApi
       XrayEnabled: true
       AuthenticationType: API_KEY
 
@@ -59,22 +59,21 @@ Resources:
     Properties:
       ApiId: !GetAtt AppSyncApi.ApiId
       Definition: |
-        type Feedback {
+        type Todo {
           id: ID!
-          rating: Int
-          reason: String
+          body: String
         }
-        type PaginatedFeedback {
-          feedback: [Feedback!]!
+        type PaginatedTodos {
+          todos: [Todo!]!
           nextToken: String
         }
         type Query {
-          getAllFeedback(limit: Int, nextToken: String): PaginatedFeedback!
-          getFeedback(id: ID!): Feedback
+          getAllTodos(limit: Int, nextToken: String): PaginatedTodos!
+          getTodo(id: ID!): Todo
         }
         type Mutation {
-          saveFeedback(rating: Int!, reason: String!): Feedback
-          deleteFeedback(id: ID!): Feedback
+          saveTodo(body: String!): Todo
+          deleteTodo(id: ID!): Todo
         }
         type Schema {
           query: Query
@@ -82,27 +81,27 @@ Resources:
         }
 
   # AppSync Data Source for DynamoDB
-  AppSyncCustomerFeedbackDataSource:
+  AppSyncTodoDataSource:
     Type: AWS::AppSync::DataSource
     Properties:
-      Name: CustomerFeedbackDataSource
+      Name: TodoDataSource
       ApiId: !GetAtt AppSyncApi.ApiId
-      Description: "The Customer Feedback Table AppSync Data Source"
+      Description: "The Todo Table AppSync Data Source"
       Type: AMAZON_DYNAMODB
       ServiceRoleArn: !GetAtt DynamoDBRole.Arn
       DynamoDBConfig:
-        TableName: !Ref CustomerFeedbackTable
+        TableName: !Ref TodoTable
         AwsRegion: !Sub ${AWS::Region}
 
-  # Resolver: Query - Get All Feedback
-  AppSyncGetAllFeedbackQueryResolver:
+  # Resolver: Query - Get All Todos
+  AppSyncGetAllTodosQueryResolver:
     Type: AWS::AppSync::Resolver
     DependsOn: AppSyncSchema
     Properties:
       ApiId: !GetAtt AppSyncApi.ApiId
       TypeName: Query
-      FieldName: getAllFeedback
-      DataSourceName: !GetAtt AppSyncCustomerFeedbackDataSource.Name
+      FieldName: getAllTodos
+      DataSourceName: !GetAtt AppSyncTodoDataSource.Name
       RequestMappingTemplate: |
         {
           "version": "2017-02-28",
@@ -112,19 +111,19 @@ Resources:
         }
       ResponseMappingTemplate: |
         {
-          "feedback": $util.toJson($ctx.result.items),
+          "todos": $util.toJson($ctx.result.items),
           "nextToken": $util.toJson(${ctx.args.nextToken})
         }
 
-  # Resolver: Query - get one Feedback record
-  AppSyncGetFeedbackQueryResolver:
+  # Resolver: Query - get one Todo record
+  AppSyncGetTodoQueryResolver:
     Type: AWS::AppSync::Resolver
     DependsOn: AppSyncSchema
     Properties:
       ApiId: !GetAtt AppSyncApi.ApiId
       TypeName: Query
-      FieldName: getFeedback
-      DataSourceName: !GetAtt AppSyncCustomerFeedbackDataSource.Name
+      FieldName: getTodo
+      DataSourceName: !GetAtt AppSyncTodoDataSource.Name
       RequestMappingTemplate: |
         {
           "version": "2018-05-29",
@@ -135,15 +134,15 @@ Resources:
         }
       ResponseMappingTemplate: "$util.toJson($ctx.result)"
 
-  # Resolver: Mutation - Save Feedback
-  AppSyncSaveFeedbackMutationResolver:
+  # Resolver: Mutation - Save Todos
+  AppSyncSaveTodoMutationResolver:
     Type: AWS::AppSync::Resolver
     DependsOn: AppSyncSchema
     Properties:
       ApiId: !GetAtt AppSyncApi.ApiId
       TypeName: Mutation
-      FieldName: saveFeedback
-      DataSourceName: !GetAtt AppSyncCustomerFeedbackDataSource.Name
+      FieldName: saveTodo
+      DataSourceName: !GetAtt AppSyncTodoDataSource.Name
       RequestMappingTemplate: |
         {
           "version": "2018-05-29",
@@ -152,8 +151,7 @@ Resources:
             "id": $util.dynamodb.toDynamoDBJson($util.autoId())
           },
           "attributeValues": {
-            "rating": $util.dynamodb.toDynamoDBJson($ctx.args.rating),
-            "reason": $util.dynamodb.toDynamoDBJson($ctx.args.reason)
+            "body": $util.dynamodb.toDynamoDBJson($ctx.args.body)
           },
           "condition": {
             "expression": "attribute_not_exists(#id)",
@@ -163,14 +161,14 @@ Resources:
       ResponseMappingTemplate: "$util.toJson($ctx.result)"
 
   # Resolver: Mutations - Delete note
-  AppSyncDeleteFeedbackMutationResolver:
+  AppSyncDeleteTodoMutationResolver:
     Type: AWS::AppSync::Resolver
     DependsOn: AppSyncSchema
     Properties:
       ApiId: !GetAtt AppSyncApi.ApiId
       TypeName: Mutation
-      FieldName: deleteFeedback
-      DataSourceName: !GetAtt AppSyncCustomerFeedbackDataSource.Name
+      FieldName: deleteTodo
+      DataSourceName: !GetAtt AppSyncTodoDataSource.Name
       RequestMappingTemplate: |
         {
           "version": "2018-05-29",

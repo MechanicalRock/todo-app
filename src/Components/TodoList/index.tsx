@@ -2,7 +2,7 @@ import { Stars } from "@mui/icons-material";
 import { List, ListItem, Grid, Typography } from "@mui/material";
 import React from "react";
 
-export default function FeedbackList(props: any) {
+export default function TodoList(props: any) {
   console.log(props.data);
   return (
     <>
@@ -22,13 +22,8 @@ export default function FeedbackList(props: any) {
                 <>
                   <ListItem key={item.id}>
                     <Grid container>
-                      <Grid item xs={2}>
-                        <Typography variant="body1">
-                          <strong>{item.rating} </strong>
-                        </Typography>
-                      </Grid>
-                      <Grid item xs={10}>
-                        <Typography variant="body1">{item.reason}</Typography>
+                      <Grid item xs={12}>
+                        <Typography variant="body1">{item.body}</Typography>
                       </Grid>
                     </Grid>
                   </ListItem>

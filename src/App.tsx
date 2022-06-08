@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import {
   ApolloClient,
   ApolloProvider,
@@ -25,7 +25,7 @@ export default function App() {
   const link = from([
     errorLink,
     new HttpLink({
-      uri: "https://iifyruoomnh2niepkwubd6bcue.appsync-api.ap-southeast-2.amazonaws.com/graphql ",
+      uri: "https://je4b5gma4vhazdwung6egsh3di.appsync-api.ap-southeast-2.amazonaws.com/graphql",
     }),
   ]);
 
