@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "@apollo/client";
+import { useLazyQuery, useMutation } from "@apollo/client";
 import {
   Alert,
   Box,
@@ -21,19 +21,18 @@ export default function FeedbackForm() {
   const [loading, setLoading] = useState(false);
   const [todos, setTodos] = useState([{}]);
   const { user } = useGlobalUserContext();
-  const { data, error } = useQuery(GET_DATA);
+  const [getAllTodos, { data, error }] = useLazyQuery(GET_DATA, {
+    fetchPolicy: "network-only",
+  });
 
-  const getTodos = () => {
+  useEffect(() => {
+    getAllTodos();
     if (data) {
       setTodos(data.getAllTodos.todos);
     }
     if (error) {
       console.log(error);
     }
-  };
-
-  useEffect(() => {
-    getTodos();
   }, [data]);
 
   const submit = () => {
@@ -43,13 +42,11 @@ export default function FeedbackForm() {
         body: todo,
       },
     });
+    setTodo("");
+    setLoading(false);
+    getAllTodos();
     if (error) {
       console.log(error);
-    } else {
-      setLoading(false);
-      setSubmitted(true);
-      getTodos();
-      setTodo("");
     }
   };
 
@@ -64,8 +61,8 @@ export default function FeedbackForm() {
 
   return (
     <>
-      {!submitted && (
-        <>
+      <>
+        <Grid container sx={{ marginRight: "40px", marginLeft: "40px" }}>
           <Grid item xs={12} textAlign={"center"}>
             {error && (
               <Alert severity="error">
@@ -77,14 +74,11 @@ export default function FeedbackForm() {
           <Grid item xs={12} textAlign={"center"}>
             <Typography variant="body1">Wednesday 9th June 2022</Typography>
           </Grid>
-          <Grid item xs={12} textAlign={"center"}>
-            <TodoList data={todos} />
-          </Grid>
 
           <Grid item xs={12} textAlign={"center"}>
             <TextField
               variant="outlined"
-              label={"Reason for response"}
+              label={"To do"}
               sx={{ width: "70%" }}
               value={todo}
               onChange={(event) => {
@@ -97,9 +91,12 @@ export default function FeedbackForm() {
               <Typography variant="body1">Add Todo</Typography>
             </Button>
           </Grid>
+          <Grid item xs={12} textAlign={"center"}>
+            <TodoList data={todos} />
+          </Grid>
           <Grid item xs={12} textAlign={"center"} padding={"20px"}></Grid>
-        </>
-      )}
+        </Grid>
+      </>
 
       {loading && (
         <>

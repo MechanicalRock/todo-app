@@ -1,36 +1,43 @@
 import { Stars } from "@mui/icons-material";
-import { List, ListItem, Grid, Typography } from "@mui/material";
+import {
+  List,
+  ListItem,
+  Grid,
+  Typography,
+  Divider,
+  Button,
+} from "@mui/material";
 import React from "react";
 
 export default function TodoList(props: any) {
   console.log(props.data);
   return (
     <>
-      <Grid item xs={12}>
-        <List
-          sx={{
-            width: "relative",
-            maxWidth: "100vh",
-            position: "relative",
-            overflow: "auto",
-            maxHeight: "100vh",
-            "& ul": { padding: 0 },
-          }}
-        >
-          {props.data
-            ? props.data.map((item: any) => (
-                <>
-                  <ListItem key={item.id}>
-                    <Grid container>
-                      <Grid item xs={12}>
-                        <Typography variant="body1">{item.body}</Typography>
-                      </Grid>
+      <Grid container textAlign={"start"} rowSpacing={"32px"}>
+        {props.data
+          ? props.data.map((item: any) => (
+              <>
+                <Grid item xs={12} key={item.id}>
+                  <Divider />
+                  <Grid container spacing={4}>
+                    <Grid item xs={8} key={item.id}>
+                      <Typography variant="body1">{item.body}</Typography>
                     </Grid>
-                  </ListItem>
-                </>
-              ))
-            : null}
-        </List>
+                    <Grid item xs={2} key={item.id}>
+                      <Button variant="contained">
+                        <Typography variant="body1">Delete</Typography>
+                      </Button>
+                    </Grid>
+                    <Grid item xs={2} key={item.id}>
+                      <Button variant="contained">
+                        <Typography variant="body1">Done</Typography>
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </>
+            ))
+          : null}
       </Grid>
     </>
   );
