@@ -16,37 +16,72 @@ import TodoList from "../TodoList";
 
 export default function FeedbackForm() {
   const [todo, setTodo] = useState("");
-  const [saveTodo] = useMutation(PUT_DATA);
   const [loading, setLoading] = useState(false);
   const [todos, setTodos] = useState([{}]);
   const { user } = useGlobalUserContext();
-  const [getAllTodos, { data, error }] = useLazyQuery(GET_DATA, {
-    fetchPolicy: "network-only",
-  });
-
+  const token = user.signInUserSession.idToken.jwtToken;
   useEffect(() => {
-    getAllTodos();
-    if (data) {
-      setTodos(data.getAllTodos.todos);
-    }
-    if (error) {
-      console.log(error);
-    }
-  }, [data]);
+    getTodos();
+    console.log(token);
+  }, []);
+
+  const getTodos = () => {
+    fetch(
+      "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todos",
+      {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      }
+    )
+      .then((res) => res.json())
+      .then((data) => setTodos(data.Items));
+  };
+
+  const saveTodo = () => {
+    fetch(
+      "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
+      {
+        method: "POST",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          body: todo,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((message) => console.log(message));
+  };
+
+  const deleteTodo = (id: string, createdAt: string) => {
+    fetch(
+      "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
+      {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+          createdAt: createdAt,
+        }),
+      }
+    )
+      .then((res) => res.json())
+      .then((message) => console.log(message));
+  };
 
   const submit = () => {
+    saveTodo();
     setLoading(true);
-    saveTodo({
-      variables: {
-        body: todo,
-      },
-    });
+    saveTodo();
     setTodo("");
-    setLoading(false);
-    getAllTodos();
-    if (error) {
-      console.log(error);
-    }
+    getTodos();
   };
 
   // async function signOut() {
@@ -66,11 +101,11 @@ export default function FeedbackForm() {
           sx={{ marginRight: "40px", marginLeft: "40px", marginTop: "60px" }}
         >
           <Grid item xs={12} textAlign={"center"}>
-            {error && (
+            {/* {false && (
               <Alert severity="error">
                 Something went wrong, pleas try again later{" "}
               </Alert>
-            )}
+            )} */}
             <Typography variant="h4">To do:</Typography>
           </Grid>
           <Grid item xs={12} textAlign={"center"}>
@@ -94,7 +129,7 @@ export default function FeedbackForm() {
             </Button>
           </Grid>
           <Grid item xs={12} textAlign={"center"}>
-            <TodoList data={todos} />
+            <TodoList data={todos} getTodos={getTodos} />
           </Grid>
           <Grid item xs={12} textAlign={"center"} padding={"20px"}></Grid>
         </Grid>
