@@ -1,23 +1,16 @@
 import { Grid } from "@mui/material";
 import React from "react";
-import FeedbackForm from "../../Components/FeedbackForm";
+import TodoForm from "../../Components/TodoForm";
 
 export default function Main() {
   return (
     <>
-      <Grid container sx={{ marginTop: "120px" }}>
-        <Grid item xs={12} sm={3}></Grid>
+      <Grid container sx={{ marginTop: "120px" }} justifyContent={"center"}>
         <Grid item xs={12} md={6}>
-          <Grid
-            container
-            boxShadow={4}
-            // sx={{ margin: "0 40px 0 40px" }}
-            spacing={"20px"}
-          >
-            <FeedbackForm />
+          <Grid container boxShadow={4} spacing={"20px"}>
+            <TodoForm />
           </Grid>
         </Grid>
-        <Grid item xs={12} sm={3}></Grid>
       </Grid>
     </>
   );

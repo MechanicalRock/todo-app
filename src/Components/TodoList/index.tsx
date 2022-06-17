@@ -1,12 +1,4 @@
-import { Stars } from "@mui/icons-material";
-import {
-  List,
-  ListItem,
-  Grid,
-  Typography,
-  Divider,
-  Button,
-} from "@mui/material";
+import { Grid, Typography, Divider, Button } from "@mui/material";
 import React from "react";
 
 export default function TodoList(props: any) {

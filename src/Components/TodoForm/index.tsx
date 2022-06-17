@@ -16,7 +16,6 @@ import TodoList from "../TodoList";
 
 export default function FeedbackForm() {
   const [todo, setTodo] = useState("");
-  const [submitted, setSubmitted] = useState(false);
   const [saveTodo] = useMutation(PUT_DATA);
   const [loading, setLoading] = useState(false);
   const [todos, setTodos] = useState([{}]);
@@ -62,7 +61,10 @@ export default function FeedbackForm() {
   return (
     <>
       <>
-        <Grid container sx={{ marginRight: "40px", marginLeft: "40px" }}>
+        <Grid
+          container
+          sx={{ marginRight: "40px", marginLeft: "40px", marginTop: "60px" }}
+        >
           <Grid item xs={12} textAlign={"center"}>
             {error && (
               <Alert severity="error">
