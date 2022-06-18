@@ -7,7 +7,7 @@ export default function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { user, setUser } = useGlobalUserContext();
+  const { setUser } = useGlobalUserContext();
 
   const handleSubmit = async (e: any) => {
     setLoading(true);
@@ -21,7 +21,6 @@ export default function LoginForm() {
     setLoading(false);
     // const newpassword = await Auth.completeNewPassword(user, password);
   };
-
   return (
     <>
       <Grid item xs={12} textAlign="center">

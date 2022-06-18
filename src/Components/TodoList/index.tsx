@@ -3,30 +3,6 @@ import React from "react";
 import { useGlobalUserContext } from "../context";
 
 export default function TodoList(props: any) {
-  console.log(props.data);
-  const { user } = useGlobalUserContext();
-  const token = user.signInUserSession.idToken.jwtToken;
-  const deleteTodo = (id: string, createdAt: string) => {
-    fetch(
-      "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: id,
-          createdAt: createdAt,
-        }),
-      }
-    )
-      .then((res) => res.json())
-      .then((message) => {
-        props.getTodos();
-        console.log(message);
-      });
-  };
   return (
     <>
       <Grid container textAlign={"start"} rowSpacing={"32px"}>
@@ -48,7 +24,7 @@ export default function TodoList(props: any) {
                       <Button
                         variant="contained"
                         onClick={() => {
-                          deleteTodo(item.id, item.createdAt);
+                          props.deleteTodo(item.id, item.createdAt);
                         }}
                       >
                         <Typography variant="body1">Done</Typography>

@@ -8,6 +8,7 @@ import {
   TextField,
   Typography,
 } from "@mui/material";
+import { Auth } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { PUT_DATA } from "../../GraphQL/mutations";
 import { GET_DATA } from "../../GraphQL/queries";
@@ -18,12 +19,15 @@ export default function FeedbackForm() {
   const [todo, setTodo] = useState("");
   const [loading, setLoading] = useState(false);
   const [todos, setTodos] = useState([{}]);
-  const { user } = useGlobalUserContext();
-  const token = user.signInUserSession.idToken.jwtToken;
+  const { user, setUser } = useGlobalUserContext();
+  const [token, setToken] = useState("");
+
   useEffect(() => {
+    if (user) {
+      setToken(user.signInUserSession.idToken.jwtToken);
+    }
     getTodos();
-    console.log(token);
-  }, []);
+  }, [user, token]);
 
   const getTodos = () => {
     fetch(
@@ -77,28 +81,36 @@ export default function FeedbackForm() {
   };
 
   const submit = () => {
-    saveTodo();
     setLoading(true);
     saveTodo();
     setTodo("");
     getTodos();
+    setLoading(false);
   };
 
-  // async function signOut() {
-  //   try {
-  //     await Auth.signOut();
-  //     setUser(null);
-  //   } catch (error) {
-  //     console.log("error signing out: ", error);
-  //   }
-  // }
+  async function signOut() {
+    try {
+      await Auth.signOut();
+      setUser(null);
+      window.localStorage.setItem("auth", "false");
+      window.location.reload();
+    } catch (error) {
+      console.log("error signing out: ", error);
+    }
+  }
 
   return (
     <>
       <>
+        <Button onClick={signOut}>Sign Out</Button>
         <Grid
           container
-          sx={{ marginRight: "40px", marginLeft: "40px", marginTop: "60px" }}
+          sx={{
+            marginRight: "40px",
+            marginLeft: "40px",
+            marginTop: "40px",
+            marginBottom: "40px",
+          }}
         >
           <Grid item xs={12} textAlign={"center"}>
             {/* {false && (
@@ -129,9 +141,12 @@ export default function FeedbackForm() {
             </Button>
           </Grid>
           <Grid item xs={12} textAlign={"center"}>
-            <TodoList data={todos} getTodos={getTodos} />
+            <TodoList
+              data={todos}
+              getTodos={getTodos}
+              deleteTodo={deleteTodo}
+            />
           </Grid>
-          <Grid item xs={12} textAlign={"center"} padding={"20px"}></Grid>
         </Grid>
       </>
 

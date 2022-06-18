@@ -1,25 +1,50 @@
 import { Button } from "@mui/material";
 import { Auth } from "aws-amplify";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useGlobalUserContext } from "../Components/context";
 import Login from "./Login";
 import Main from "./Main";
 
 export default function Pages() {
-  const { user } = useGlobalUserContext();
+  const { user, setUser } = useGlobalUserContext();
+  const [auth, setAuth] = useState(
+    false || window.localStorage.getItem("auth") === "true"
+  );
+
+  useEffect(() => {
+    isUserSignedIn();
+    if (user) {
+      setAuth(true);
+      window.localStorage.setItem("auth", "true");
+    }
+  }, []);
+
+  useEffect(() => {
+    if (user) {
+      setAuth(true);
+      window.localStorage.setItem("auth", "true");
+    }
+  }, [user]);
+
+  console.log(user);
+  const isUserSignedIn = async () => {
+    const activeUserSession = await Auth.currentAuthenticatedUser();
+    if (activeUserSession) {
+      setUser(activeUserSession);
+    }
+  };
 
   return (
     <>
       <Routes>
-        {!user && (
-          <>
-            <Route path="/" element={<Login />}></Route>
-          </>
-        )}
-        {user && (
+        {auth ? (
           <>
             <Route path="/" element={<Main />}></Route>
+          </>
+        ) : (
+          <>
+            <Route path="/" element={<Login />}></Route>
           </>
         )}
         ;
