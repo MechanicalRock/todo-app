@@ -1,7 +1,4 @@
 import { Grid, Typography, Divider, Button } from "@mui/material";
-import React from "react";
-import { useGlobalUserContext } from "../context";
-
 export default function TodoList(props: any) {
   return (
     <>
@@ -9,18 +6,18 @@ export default function TodoList(props: any) {
         {props.data
           ? props.data.map((item: any) => (
               <>
-                <Grid item xs={12} key={item.id}>
+                <Grid item xs={12}>
                   <Divider />
                   <Grid container spacing={4}>
-                    <Grid item xs={8} key={item.id}>
+                    <Grid item xs={8}>
                       <Typography variant="body1">{item.body}</Typography>
                     </Grid>
-                    <Grid item xs={2} key={item.id}>
+                    <Grid item xs={2}>
                       <Button variant="contained">
                         <Typography variant="body1">Delete</Typography>
                       </Button>
                     </Grid>
-                    <Grid item xs={2} key={item.id}>
+                    <Grid item xs={2}>
                       <Button
                         variant="contained"
                         onClick={() => {

@@ -25,59 +25,62 @@ export default function FeedbackForm() {
   useEffect(() => {
     if (user) {
       setToken(user.signInUserSession.idToken.jwtToken);
+      getTodos();
     }
-    getTodos();
   }, [user, token]);
 
   const getTodos = () => {
-    fetch(
-      "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todos",
-      {
-        method: "GET",
-        headers: {
-          Authorization: token,
-        },
-      }
-    )
-      .then((res) => res.json())
-      .then((data) => setTodos(data.Items));
+    token &&
+      fetch(
+        "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todos",
+        {
+          method: "GET",
+          headers: {
+            Authorization: token,
+          },
+        }
+      )
+        .then((res) => res.json())
+        .then((data) => setTodos(data.Items));
   };
 
   const saveTodo = () => {
-    fetch(
-      "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
-      {
-        method: "POST",
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          body: todo,
-        }),
-      }
-    )
-      .then((res) => res.json())
-      .then((message) => console.log(message));
+    token &&
+      fetch(
+        "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
+        {
+          method: "POST",
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            body: todo,
+          }),
+        }
+      )
+        .then((res) => res.json())
+        .then((message) => console.log(message));
   };
 
   const deleteTodo = (id: string, createdAt: string) => {
-    fetch(
-      "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: token,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          id: id,
-          createdAt: createdAt,
-        }),
-      }
-    )
-      .then((res) => res.json())
-      .then((message) => console.log(message));
+    token &&
+      fetch(
+        "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: id,
+            createdAt: createdAt,
+          }),
+        }
+      )
+        .then((res) => res.json())
+        .then((message) => console.log(message));
   };
 
   const submit = () => {

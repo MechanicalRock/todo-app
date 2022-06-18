@@ -27,11 +27,12 @@ export default function Pages() {
     }
   }, [user]);
 
-  console.log(user);
   const isUserSignedIn = async () => {
     const activeUserSession = await Auth.currentAuthenticatedUser();
     if (activeUserSession) {
       setUser(activeUserSession);
+    } else {
+      window.localStorage.setItem("auth", "false");
     }
   };
 
