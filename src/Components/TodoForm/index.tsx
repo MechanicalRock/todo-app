@@ -81,8 +81,9 @@ export default function FeedbackForm() {
         .then((res) => res.json())
         .then((message) => {
           console.log(message);
-          getTodos();
-        });
+        })
+        .catch((err) => console.log(err));
+    getTodos();
   };
 
   const editTodo = (id: string, createdAt: string, editedTodo: string) => {

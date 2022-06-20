@@ -1,8 +1,21 @@
-import { Button, Divider, Grid, Typography, TextField } from "@mui/material";
+import {
+  Button,
+  Divider,
+  Grid,
+  Typography,
+  TextField,
+  IconButton,
+} from "@mui/material";
 import React, { useState } from "react";
+import CloseIcon from "@mui/icons-material/Close";
+import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import EditIcon from "@mui/icons-material/Edit";
+import CheckCircleIcon from "@mui/icons-material/CheckCircle";
+import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 
 export default function Todo(props: any) {
   const [edit, setEdit] = useState(false);
+  const [done, setDone] = useState(false);
   const [editedBody, setEditedBody] = useState(props.item.body);
   return (
     <Grid item xs={12}>
@@ -10,34 +23,43 @@ export default function Todo(props: any) {
       {!edit ? (
         <Grid container rowSpacing={"16px"} columnSpacing={"16px"}>
           <Grid item xs={9}>
-            <Typography variant="body1">{props.item.body}</Typography>
+            <Typography
+              variant="body1"
+              sx={{ textDecoration: done ? "line-through" : null }}
+            >
+              {props.item.body}
+            </Typography>
           </Grid>
           <Grid item xs={1}>
-            <Button variant="contained">
-              <Typography
-                variant="body1"
-                onClick={() => {
-                  props.deleteTodo(props.item.id, props.item.createdAt);
-                }}
-              >
-                -
-              </Typography>
-            </Button>
+            <IconButton
+              onClick={() => {
+                props.deleteTodo(props.item.id, props.item.createdAt);
+              }}
+            >
+              <DeleteForeverIcon color={"error"} />
+            </IconButton>
           </Grid>
           <Grid item xs={1}>
-            <Button
-              variant="contained"
+            <IconButton
               onClick={() => {
                 setEdit(true);
               }}
             >
-              <Typography variant="body1">Edit</Typography>
-            </Button>
+              <EditIcon />
+            </IconButton>
           </Grid>
           <Grid item xs={1}>
-            <Button variant="contained">
-              <Typography variant="body1">Done</Typography>
-            </Button>
+            <IconButton
+              onClick={() => {
+                setDone((prevState) => !prevState);
+              }}
+            >
+              {!done ? (
+                <CheckCircleIcon color={"success"} />
+              ) : (
+                <RemoveCircleIcon color={"success"} />
+              )}
+            </IconButton>
           </Grid>
         </Grid>
       ) : (
@@ -52,9 +74,8 @@ export default function Todo(props: any) {
               />
             </Grid>
 
-            <Grid item xs={1}>
-              <Button
-                variant="contained"
+            <Grid item xs={2}>
+              <IconButton
                 onClick={() => {
                   props.editTodo(
                     props.item.id,
@@ -64,13 +85,17 @@ export default function Todo(props: any) {
                   setEdit(false);
                 }}
               >
-                <Typography variant="body1">Confirm Edit</Typography>
-              </Button>
+                <CheckCircleIcon color={"success"} />
+              </IconButton>
             </Grid>
             <Grid item xs={1}>
-              <Button variant="contained">
-                <Typography variant="body1">Done</Typography>
-              </Button>
+              <IconButton
+                onClick={() => {
+                  setEdit(false);
+                }}
+              >
+                <CloseIcon color={"error"} />
+              </IconButton>
             </Grid>
           </Grid>
         </>
