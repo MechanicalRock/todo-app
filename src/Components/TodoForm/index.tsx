@@ -56,8 +56,10 @@ export default function FeedbackForm() {
         }
       )
         .then((res) => res.json())
-        .then((message) => console.log(message));
-    getTodos();
+        .then((message) => {
+          console.log(message);
+          getTodos();
+        });
   };
 
   const deleteTodo = (id: string, createdAt: string) => {
@@ -77,11 +79,13 @@ export default function FeedbackForm() {
         }
       )
         .then((res) => res.json())
-        .then((message) => console.log(message));
-    getTodos();
+        .then((message) => {
+          console.log(message);
+          getTodos();
+        });
   };
 
-  const editTodo = (id: string, editedTodo: string) => {
+  const editTodo = (id: string, createdAt: string, editedTodo: string) => {
     token &&
       fetch(
         "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
@@ -93,13 +97,16 @@ export default function FeedbackForm() {
           },
           body: JSON.stringify({
             id: id,
+            createdAt: createdAt,
             body: editedTodo,
           }),
         }
       )
         .then((res) => res.json())
-        .then((message) => console.log(message));
-    getTodos();
+        .then((message) => {
+          console.log(message);
+          getTodos();
+        });
   };
 
   const submit = () => {

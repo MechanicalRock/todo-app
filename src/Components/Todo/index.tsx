@@ -51,23 +51,16 @@ export default function Todo(props: any) {
                 }}
               />
             </Grid>
-            <Grid item xs={1}>
-              <Button variant="contained">
-                <Typography
-                  variant="body1"
-                  onClick={() => {
-                    props.deleteTodo(props.item.id, props.item.createdAt);
-                  }}
-                >
-                  -
-                </Typography>
-              </Button>
-            </Grid>
+
             <Grid item xs={1}>
               <Button
                 variant="contained"
                 onClick={() => {
-                  props.editTodo(props.item.id, editedBody);
+                  props.editTodo(
+                    props.item.id,
+                    props.item.createdAt,
+                    editedBody
+                  );
                   setEdit(false);
                 }}
               >
