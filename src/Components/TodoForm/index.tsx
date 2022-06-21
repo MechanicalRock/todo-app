@@ -10,6 +10,7 @@ import { Auth } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { useGlobalUserContext } from "../context";
 import TodoList from "../TodoList";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function FeedbackForm() {
   const [todo, setTodo] = useState("");
@@ -24,6 +25,11 @@ export default function FeedbackForm() {
       getTodos();
     }
   }, [user, token]);
+
+  const errorMessage = () =>
+    toast.error("Something went wrong, please try again later");
+  const successMessage = (successMessage: string) =>
+    toast.success(successMessage);
 
   const getTodos = () => {
     token &&
@@ -57,7 +63,7 @@ export default function FeedbackForm() {
       )
         .then((res) => res.json())
         .then((message) => {
-          console.log(message);
+          message === "Todo created" ? successMessage(message) : errorMessage();
           getTodos();
         });
   };
@@ -80,7 +86,7 @@ export default function FeedbackForm() {
       )
         .then((res) => res.json())
         .then((message) => {
-          console.log(message);
+          message === "Deleted" ? successMessage(message) : errorMessage();
         })
         .catch((err) => console.log(err));
     getTodos();
@@ -105,7 +111,7 @@ export default function FeedbackForm() {
       )
         .then((res) => res.json())
         .then((message) => {
-          console.log(message);
+          message === "Changed Todo" ? successMessage(message) : errorMessage();
           getTodos();
         });
   };
@@ -130,6 +136,7 @@ export default function FeedbackForm() {
 
   return (
     <>
+      <Toaster />
       <>
         <Button onClick={signOut}>Sign Out</Button>
         <Grid
@@ -142,11 +149,6 @@ export default function FeedbackForm() {
           }}
         >
           <Grid item xs={12} textAlign={"center"}>
-            {/* {false && (
-              <Alert severity="error">
-                Something went wrong, pleas try again later{" "}
-              </Alert>
-            )} */}
             <Typography variant="h4">To do:</Typography>
           </Grid>
           <Grid item xs={12} textAlign={"center"}>

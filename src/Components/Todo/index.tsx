@@ -82,6 +82,7 @@ export default function Todo(props: any) {
                     props.item.createdAt,
                     editedBody
                   );
+                  setEditedBody(props.item.body);
                   setEdit(false);
                 }}
               >
