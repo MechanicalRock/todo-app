@@ -6,7 +6,7 @@ import {
   TextField,
   IconButton,
 } from "@mui/material";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
 import EditIcon from "@mui/icons-material/Edit";
@@ -16,7 +16,11 @@ import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
 export default function Todo(props: any) {
   const [edit, setEdit] = useState(false);
   const [done, setDone] = useState(false);
-  const [editedBody, setEditedBody] = useState(props.item.body);
+  const [editedBody, setEditedBody] = useState("");
+  useEffect(() => {
+    setEditedBody(props.item.body);
+  }, [props.item.body]);
+
   return (
     <Grid item xs={12}>
       <Divider />
