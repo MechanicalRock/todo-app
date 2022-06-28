@@ -4,6 +4,8 @@ import "./index.css";
 import App from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Auth } from "aws-amplify";
+import { ThemeProvider } from "@mui/material";
+import theme from "./theme";
 
 Auth.configure({
   region: "ap-southeast-2",
@@ -16,8 +18,10 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <Router>
-      <App />
-    </Router>
+    <ThemeProvider theme={theme}>
+      <Router>
+        <App />
+      </Router>
+    </ThemeProvider>
   </React.StrictMode>
 );
