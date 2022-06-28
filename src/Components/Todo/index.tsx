@@ -23,9 +23,13 @@ export default function Todo(props: any) {
 
   return (
     <Grid item xs={12}>
-      <Divider />
       {!edit ? (
-        <Grid container rowSpacing={"16px"} columnSpacing={"16px"}>
+        <Grid
+          container
+          rowSpacing={"16px"}
+          columnSpacing={"16px"}
+          sx={{ backgroundColor: "#252627" }}
+        >
           <Grid item xs={9}>
             <Typography
               variant="body1"

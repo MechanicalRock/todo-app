@@ -15,12 +15,7 @@ export default function Login() {
       >
         <Grid item xs={12} sm={3}></Grid>
         <Grid item xs={12} md={6}>
-          <Grid
-            container
-            boxShadow={4}
-            sx={{ minWidth: "10vw" }}
-            spacing={"20px"}
-          >
+          <Grid container boxShadow={4} spacing={"20px"}>
             <LoginForm />
           </Grid>
         </Grid>
