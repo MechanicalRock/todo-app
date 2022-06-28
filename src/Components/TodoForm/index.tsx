@@ -18,6 +18,10 @@ export default function FeedbackForm() {
   const [todos, setTodos] = useState([{}]);
   const { user, setUser } = useGlobalUserContext();
   const [token, setToken] = useState("");
+  const today = new Date();
+  const dd = String(today.getDate()).padStart(2, "0");
+  const mm = String(today.getMonth() + 1).padStart(2, "0");
+  const yyyy = today.getFullYear();
 
   useEffect(() => {
     if (user) {
@@ -149,10 +153,10 @@ export default function FeedbackForm() {
           }}
         >
           <Grid item xs={12} textAlign={"center"}>
-            <Typography variant="h4">To do:</Typography>
+            <Typography variant="h4">Today I will:</Typography>
           </Grid>
           <Grid item xs={12} textAlign={"center"}>
-            <Typography variant="body1">Wednesday 9th June 2022</Typography>
+            <Typography variant="body1">{`${dd}/${mm}/${yyyy}`}</Typography>
           </Grid>
 
           <Grid item xs={12} textAlign={"center"}>
