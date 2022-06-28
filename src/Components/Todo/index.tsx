@@ -8,10 +8,10 @@ import {
 } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
-import DeleteForeverIcon from "@mui/icons-material/DeleteForever";
+import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
-import RemoveCircleIcon from "@mui/icons-material/RemoveCircle";
+import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 
 export default function Todo(props: any) {
   const [edit, setEdit] = useState(false);
@@ -28,23 +28,33 @@ export default function Todo(props: any) {
           container
           rowSpacing={"16px"}
           columnSpacing={"16px"}
-          sx={{ backgroundColor: "#252627" }}
+          sx={{
+            backgroundColor: "#38393A",
+            borderRadius: "12px",
+            padding: "0px 4px 12px 4px",
+          }}
         >
           <Grid item xs={9}>
             <Typography
-              variant="body1"
+              variant="h4"
               sx={{ textDecoration: done ? "line-through" : null }}
             >
               {props.item.body}
             </Typography>
           </Grid>
+
           <Grid item xs={1}>
             <IconButton
               onClick={() => {
                 props.deleteTodo(props.item.id, props.item.createdAt);
               }}
             >
-              <DeleteForeverIcon color={"error"} />
+              <DeleteForeverOutlinedIcon
+                color={"error"}
+                sx={{
+                  marginTop: "-6px",
+                }}
+              />
             </IconButton>
           </Grid>
           <Grid item xs={1}>
@@ -53,7 +63,11 @@ export default function Todo(props: any) {
                 setEdit(true);
               }}
             >
-              <EditIcon />
+              <EditIcon
+                sx={{
+                  marginTop: "-6px",
+                }}
+              />
             </IconButton>
           </Grid>
           <Grid item xs={1}>
@@ -63,9 +77,21 @@ export default function Todo(props: any) {
               }}
             >
               {!done ? (
-                <CheckCircleIcon color={"success"} />
+                <CheckCircleOutlineOutlinedIcon
+                  sx={{
+                    margin: "-6px",
+                    color: "#0277bd",
+                    fontSize: "28px",
+                  }}
+                />
               ) : (
-                <RemoveCircleIcon color={"success"} />
+                <CheckCircleIcon
+                  sx={{
+                    marginTop: "-6px",
+                    color: "#0277bd",
+                    fontSize: "28px",
+                  }}
+                />
               )}
             </IconButton>
           </Grid>

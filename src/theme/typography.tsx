@@ -11,6 +11,7 @@ export const typography: TypographyOptions = {
     fontWeight: 700,
     textDecoration: "none",
     lineHeight: "150%",
+    margin: "8px",
   },
   h1: {
     fontFamily: "Nunito Sans, sans-serif",
@@ -28,7 +29,7 @@ export const typography: TypographyOptions = {
     fontSize: "32px",
     lineHeight: "62.4px",
     marginBottom: "25px",
-    color: "#333333",
+    color: "#ffffff",
   },
   h3: {
     fontFamily: "Nunito Sans, sans-serif",

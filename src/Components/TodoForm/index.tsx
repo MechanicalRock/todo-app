@@ -142,7 +142,9 @@ export default function FeedbackForm() {
     <>
       <Toaster />
       <>
-        <Button onClick={signOut}>Sign Out</Button>
+        <Button onClick={signOut} color={"error"}>
+          Sign Out
+        </Button>
         <Grid
           container
           sx={{
@@ -153,10 +155,7 @@ export default function FeedbackForm() {
           }}
         >
           <Grid item xs={12} textAlign={"center"}>
-            <Typography variant="h4">Today I will:</Typography>
-          </Grid>
-          <Grid item xs={12} textAlign={"center"}>
-            <Typography variant="body1">{`${dd}/${mm}/${yyyy}`}</Typography>
+            <Typography variant="h2">Today I need to:</Typography>
           </Grid>
 
           <Grid item xs={12} textAlign={"center"}>
@@ -171,11 +170,18 @@ export default function FeedbackForm() {
             />
           </Grid>
           <Grid item xs={12} textAlign={"center"} padding={"20px"}>
-            <Button variant="contained" onClick={submit}>
-              <Typography variant="body1">Add Todo</Typography>
+            <Button
+              variant="contained"
+              onClick={submit}
+              sx={{
+                borderRadius: "8px",
+                background: "#0277bd",
+              }}
+            >
+              Add Todo
             </Button>
           </Grid>
-          <Grid item xs={12} textAlign={"center"}>
+          <Grid item xs={12} textAlign={"center"} sx={{ padding: "12px" }}>
             <TodoList
               data={todos}
               getTodos={getTodos}
