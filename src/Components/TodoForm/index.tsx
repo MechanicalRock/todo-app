@@ -146,7 +146,9 @@ export default function FeedbackForm() {
       )
         .then((res) => res.json())
         .then((message) => {
-          message === "Changed Todo" ? successMessage(message) : errorMessage();
+          message === "Changed Todo"
+            ? successMessage("Nice work!")
+            : errorMessage();
           getTodos();
         });
   };

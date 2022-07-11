@@ -73,13 +73,19 @@ export default function Todo(props: any) {
           <Grid item xs={1}>
             <IconButton
               onClick={() => {
-                setDone((prevState) => !prevState);
-                props.completeTodo(
-                  props.item.id,
-                  props.item.createdAt,
-                  props.item.body,
-                  true
-                );
+                props.item.done
+                  ? props.completeTodo(
+                      props.item.id,
+                      props.item.createdAt,
+                      props.item.body,
+                      false
+                    )
+                  : props.completeTodo(
+                      props.item.id,
+                      props.item.createdAt,
+                      props.item.body,
+                      true
+                    );
               }}
             >
               {!props.item.done ? (
