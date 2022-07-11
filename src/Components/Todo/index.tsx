@@ -1,17 +1,11 @@
-import {
-  Button,
-  Divider,
-  Grid,
-  Typography,
-  TextField,
-  IconButton,
-} from "@mui/material";
+import { Grid, Typography, TextField, IconButton } from "@mui/material";
 import React, { useEffect, useState } from "react";
 import CloseIcon from "@mui/icons-material/Close";
 import DeleteForeverOutlinedIcon from "@mui/icons-material/DeleteForeverOutlined";
 import EditIcon from "@mui/icons-material/Edit";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
+import toast from "react-hot-toast";
 
 export default function Todo(props: any) {
   const [edit, setEdit] = useState(false);
@@ -73,19 +67,22 @@ export default function Todo(props: any) {
           <Grid item xs={1}>
             <IconButton
               onClick={() => {
-                props.item.done
-                  ? props.completeTodo(
-                      props.item.id,
-                      props.item.createdAt,
-                      props.item.body,
-                      false
-                    )
-                  : props.completeTodo(
-                      props.item.id,
-                      props.item.createdAt,
-                      props.item.body,
-                      true
-                    );
+                if (props.item.done) {
+                  props.completeTodo(
+                    props.item.id,
+                    props.item.createdAt,
+                    props.item.body,
+                    false
+                  );
+                } else {
+                  props.completeTodo(
+                    props.item.id,
+                    props.item.createdAt,
+                    props.item.body,
+                    true
+                  );
+                  toast.success("Nice Work!");
+                }
               }}
             >
               {!props.item.done ? (
