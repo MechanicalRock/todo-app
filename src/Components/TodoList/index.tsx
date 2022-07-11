@@ -14,6 +14,7 @@ export default function TodoList(props: any) {
                   deleteTodo={props.deleteTodo}
                   editTodo={props.editTodo}
                   getTodos={props.getTodos}
+                  completeTodo={props.completeTodo}
                 />
               </>
             ))

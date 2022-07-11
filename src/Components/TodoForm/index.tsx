@@ -62,6 +62,7 @@ export default function FeedbackForm() {
           },
           body: JSON.stringify({
             body: todo,
+            done: false,
           }),
         }
       )
@@ -110,6 +111,36 @@ export default function FeedbackForm() {
             id: id,
             createdAt: createdAt,
             body: editedTodo,
+          }),
+        }
+      )
+        .then((res) => res.json())
+        .then((message) => {
+          message === "Changed Todo" ? successMessage(message) : errorMessage();
+          getTodos();
+        });
+  };
+
+  const completeTodo = (
+    id: string,
+    createdAt: string,
+    body: string,
+    done: boolean
+  ) => {
+    token &&
+      fetch(
+        "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
+        {
+          method: "PUT",
+          headers: {
+            Authorization: token,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            id: id,
+            createdAt: createdAt,
+            body: body,
+            done: done,
           }),
         }
       )
@@ -187,6 +218,7 @@ export default function FeedbackForm() {
               getTodos={getTodos}
               deleteTodo={deleteTodo}
               editTodo={editTodo}
+              completeTodo={completeTodo}
             />
           </Grid>
         </Grid>

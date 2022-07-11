@@ -37,7 +37,7 @@ export default function Todo(props: any) {
           <Grid item xs={9}>
             <Typography
               variant="h4"
-              sx={{ textDecoration: done ? "line-through" : null }}
+              sx={{ textDecoration: props.item.done ? "line-through" : null }}
             >
               {props.item.body}
             </Typography>
@@ -74,9 +74,15 @@ export default function Todo(props: any) {
             <IconButton
               onClick={() => {
                 setDone((prevState) => !prevState);
+                props.completeTodo(
+                  props.item.id,
+                  props.item.createdAt,
+                  props.item.body,
+                  true
+                );
               }}
             >
-              {!done ? (
+              {!props.item.done ? (
                 <CheckCircleOutlineOutlinedIcon
                   sx={{
                     margin: "-6px",
