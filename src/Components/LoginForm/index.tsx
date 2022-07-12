@@ -15,10 +15,9 @@ export default function LoginForm() {
     try {
       const user = await Auth.signIn(email, password);
       toast.success("Signing you in!");
-      console.log(user);
+
       setUser(user);
     } catch (error: any) {
-      console.log(error);
       toast.error("username and password invalid");
     }
     setLoading(false);

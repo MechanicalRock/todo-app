@@ -7,14 +7,9 @@ import toast, { Toaster } from "react-hot-toast";
 
 export default function FeedbackForm() {
   const [todo, setTodo] = useState("");
-  const [loading, setLoading] = useState(false);
   const [todos, setTodos] = useState([{}]);
   const { user, setUser } = useGlobalUserContext();
   const [token, setToken] = useState("");
-  const today = new Date();
-  const dd = String(today.getDate()).padStart(2, "0");
-  const mm = String(today.getMonth() + 1).padStart(2, "0");
-  const yyyy = today.getFullYear();
 
   useEffect(() => {
     if (user) {
@@ -93,7 +88,7 @@ export default function FeedbackForm() {
           message === "Deleted" ? deleteMessage() : errorMessage();
           getTodos();
         })
-        .catch((err) => console.log(err));
+        .catch((err) => errorMessage());
   };
 
   const editTodo = (id: string, createdAt: string, editedTodo: string) => {
@@ -151,10 +146,8 @@ export default function FeedbackForm() {
   };
 
   const submit = () => {
-    setLoading(true);
     saveTodo();
     setTodo("");
-    setLoading(false);
   };
 
   async function signOut() {
@@ -164,7 +157,7 @@ export default function FeedbackForm() {
       window.localStorage.setItem("auth", "false");
       window.location.reload();
     } catch (error) {
-      console.log("error signing out: ", error);
+      console.log(error);
     }
   }
 
