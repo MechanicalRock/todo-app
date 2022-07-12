@@ -54,6 +54,7 @@ export default function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             label={"Password"}
+            type="password"
             sx={{ width: "100%" }}
           />
         </Grid>
