@@ -30,10 +30,16 @@ export default function FeedbackForm() {
     }
   }, [user, token]);
 
-  const errorMessage = () =>
+  const errorMessage = () => {
     toast.error("Something went wrong, please try again later");
-  const successMessage = (successMessage: string) =>
+  };
+
+  const deleteMessage = () => {
+    toast.error("Todo Deleted");
+  };
+  const successMessage = (successMessage: string) => {
     toast.success(successMessage);
+  };
 
   const getTodos = () => {
     token &&
@@ -91,7 +97,7 @@ export default function FeedbackForm() {
       )
         .then((res) => res.json())
         .then((message) => {
-          message === "Deleted" ? successMessage(message) : errorMessage();
+          message === "Deleted" ? deleteMessage() : errorMessage();
           getTodos();
         })
         .catch((err) => console.log(err));
@@ -173,18 +179,19 @@ export default function FeedbackForm() {
     <>
       <Toaster />
       <>
-        <Button onClick={signOut} color={"error"}>
-          Sign Out
-        </Button>
         <Grid
           container
           sx={{
             marginRight: "40px",
             marginLeft: "40px",
-            marginTop: "40px",
-            marginBottom: "40px",
+            marginTop: "20px",
+            marginBottom: "20px",
           }}
+          spacing={3}
         >
+          <Button onClick={signOut} color={"error"}>
+            Sign Out
+          </Button>
           <Grid item xs={12} textAlign={"center"}>
             <Typography variant="h2">Today I need to:</Typography>
           </Grid>

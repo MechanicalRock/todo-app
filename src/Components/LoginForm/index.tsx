@@ -23,37 +23,42 @@ export default function LoginForm() {
   };
   return (
     <>
-      <Grid item xs={12} textAlign="center">
-        <Typography variant="h4">Login</Typography>
-      </Grid>
-      <Grid item xs={12} textAlign={"center"}>
-        <TextField
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          label={"Email"}
-          sx={{ width: "75%" }}
-        />
-      </Grid>
+      <Grid
+        container
+        sx={{
+          marginRight: "40px",
+          marginLeft: "40px",
+          marginTop: "20px",
+          marginBottom: "20px",
+        }}
+        spacing={3}
+      >
+        <Grid item xs={12} textAlign="center">
+          <Typography variant="h2">Login</Typography>
+        </Grid>
+        <Grid item xs={12} textAlign={"center"}>
+          <TextField
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            label={"Email"}
+            sx={{ width: "75%" }}
+          />
+        </Grid>
 
-      <Grid item xs={12} textAlign={"center"}>
-        <TextField
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          label={"Password"}
-          sx={{ width: "75%" }}
-        />
-      </Grid>
+        <Grid item xs={12} textAlign={"center"}>
+          <TextField
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            label={"Password"}
+            sx={{ width: "75%" }}
+          />
+        </Grid>
 
-      <Grid item xs={12} textAlign={"center"} sx={{ paddingBottom: "16px" }}>
-        <Button
-          variant="contained"
-          color="primary"
-          size="large"
-          type="submit"
-          onClick={handleSubmit}
-        >
-          <Typography variant="body1">Login</Typography>
-        </Button>
+        <Grid item xs={12} textAlign={"center"} sx={{ paddingBottom: "16px" }}>
+          <Button variant="contained" color="primary" onClick={handleSubmit}>
+            Login
+          </Button>
+        </Grid>
       </Grid>
     </>
   );
