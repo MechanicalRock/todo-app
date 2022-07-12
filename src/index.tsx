@@ -6,7 +6,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { ThemeProvider } from "@mui/material";
 import theme from "./theme";
-import { COGNITO_CONFIG } from "./config/cognito";
+import { COGNITO_CONFIG } from "./constants/constants";
 
 Auth.configure(COGNITO_CONFIG);
 

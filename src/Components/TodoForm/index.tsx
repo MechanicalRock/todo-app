@@ -5,6 +5,7 @@ import { useGlobalUserContext } from "../context";
 import TodoList from "../TodoList";
 import toast, { Toaster } from "react-hot-toast";
 import { TodoInterface } from "../../lib/types";
+import { TODOS_API, TODO_API } from "../../constants/constants";
 
 export default function FeedbackForm() {
   const [todo, setTodo] = useState<string>("");
@@ -32,15 +33,12 @@ export default function FeedbackForm() {
 
   const getTodos = () => {
     token &&
-      fetch(
-        "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todos",
-        {
-          method: "GET",
-          headers: {
-            Authorization: token,
-          },
-        }
-      )
+      fetch(TODOS_API, {
+        method: "GET",
+        headers: {
+          Authorization: token,
+        },
+      })
         .then((res) => res.json())
         .then((data) => setTodos(data.Items))
         .catch((err) => err && errorMessage());
@@ -48,20 +46,17 @@ export default function FeedbackForm() {
 
   const saveTodo = () => {
     token &&
-      fetch(
-        "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
-        {
-          method: "POST",
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            body: todo,
-            done: false,
-          }),
-        }
-      )
+      fetch(TODO_API, {
+        method: "POST",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          body: todo,
+          done: false,
+        }),
+      })
         .then((res) => res.json())
         .then((message) => {
           message === "Todo created" && successMessage(message);
@@ -72,20 +67,17 @@ export default function FeedbackForm() {
 
   const deleteTodo = (id: string, createdAt: string) => {
     token &&
-      fetch(
-        "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: id,
-            createdAt: createdAt,
-          }),
-        }
-      )
+      fetch(TODO_API, {
+        method: "DELETE",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+          createdAt: createdAt,
+        }),
+      })
         .then((res) => res.json())
         .then((message) => {
           message === "Deleted" ? deleteMessage() : errorMessage();
@@ -96,21 +88,18 @@ export default function FeedbackForm() {
 
   const editTodo = (id: string, createdAt: string, editedTodo: string) => {
     token &&
-      fetch(
-        "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
-        {
-          method: "PUT",
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: id,
-            createdAt: createdAt,
-            body: editedTodo,
-          }),
-        }
-      )
+      fetch(TODO_API, {
+        method: "PUT",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+          createdAt: createdAt,
+          body: editedTodo,
+        }),
+      })
         .then((res) => res.json())
         .then((message) => {
           message === "Changed Todo" ? successMessage(message) : errorMessage();
@@ -126,22 +115,19 @@ export default function FeedbackForm() {
     done: boolean
   ) => {
     token &&
-      fetch(
-        "https://siqmpph34k.execute-api.ap-southeast-2.amazonaws.com/dev/todo",
-        {
-          method: "PUT",
-          headers: {
-            Authorization: token,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            id: id,
-            createdAt: createdAt,
-            body: body,
-            done: done,
-          }),
-        }
-      )
+      fetch(TODO_API, {
+        method: "PUT",
+        headers: {
+          Authorization: token,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          id: id,
+          createdAt: createdAt,
+          body: body,
+          done: done,
+        }),
+      })
         .then((res) => res.json())
         .then((message) => {
           message = !"Changed Todo" ? errorMessage() : null;
