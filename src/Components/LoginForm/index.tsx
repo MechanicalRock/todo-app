@@ -12,7 +12,13 @@ export default function LoginForm() {
   const handleSubmit = async (e: any) => {
     try {
       const user = await Auth.signIn(email, password);
-
+      if (
+        user.challengeName &&
+        user.challengeName === "NEW_PASSWORD_REQUIRED"
+      ) {
+        await Auth.completeNewPassword(user, password);
+        await Auth.signIn(email, password);
+      }
       setUser(user);
     } catch (error: any) {
       toast.error("username and password invalid");
