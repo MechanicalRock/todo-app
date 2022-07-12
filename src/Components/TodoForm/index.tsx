@@ -1,7 +1,7 @@
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import { Auth } from "aws-amplify";
 import { useEffect, useState } from "react";
-import { useGlobalUserContext } from "../context";
+import { useGlobalUserContext } from "../../context";
 import TodoList from "../TodoList";
 import toast, { Toaster } from "react-hot-toast";
 import { TodoInterface } from "../../lib/types";

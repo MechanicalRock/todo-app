@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { UserContext } from "./Components/context";
+import { UserContext } from "./context";
 import { CognitoUserInterface } from "./lib/types";
 import Pages from "./Pages";
 

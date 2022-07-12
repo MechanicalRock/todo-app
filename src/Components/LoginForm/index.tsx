@@ -2,7 +2,7 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import { Auth } from "aws-amplify";
 import { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
-import { useGlobalUserContext } from "../context";
+import { useGlobalUserContext } from "../../context";
 
 export default function LoginForm() {
   const [email, setEmail] = useState("");

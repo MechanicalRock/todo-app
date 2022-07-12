@@ -1,7 +1,7 @@
 import { Auth } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
-import { useGlobalUserContext } from "../Components/context";
+import { useGlobalUserContext } from "../context";
 import Login from "./Login";
 import Main from "./Main";
 
