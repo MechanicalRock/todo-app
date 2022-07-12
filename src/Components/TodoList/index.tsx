@@ -1,11 +1,9 @@
 import { Grid } from "@mui/material";
 import { TodoInterface } from "../../lib/types";
-
 import Todo from "../Todo";
 
 interface Props {
   todos: TodoInterface[] | undefined;
-
   deleteTodo: (id: string, createdAt: string) => void;
   editTodo: (id: string, createdAt: string, editedTodo: string) => void;
   getTodos: () => void;

@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { useGlobalUserContext } from "../context";
 import TodoList from "../TodoList";
 import toast, { Toaster } from "react-hot-toast";
-import { TodoInterface, TodosInterface } from "../../lib/types";
+import { TodoInterface } from "../../lib/types";
 
 export default function FeedbackForm() {
   const [todo, setTodo] = useState<string>("");
