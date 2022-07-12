@@ -41,7 +41,7 @@ export const typography: TypographyOptions = {
   },
   h4: {
     fontFamily: "Nunito Sans, sans-serif",
-    fontSize: "20px",
+    fontSize: "18px",
     fontWeight: 400,
     textDecoration: "none",
     color: "#ffffff",
@@ -60,7 +60,7 @@ export const typography: TypographyOptions = {
   body1: {
     fontFamily: "Nunito Sans, sans-serif",
     fontSize: "16px",
-    fontWeight: 400,
+    fontWeight: 500,
     textDecoration: "none",
     color: "white",
     lineHeight: "24px",

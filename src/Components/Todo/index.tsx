@@ -19,7 +19,7 @@ export default function Todo(props: any) {
       {!edit ? (
         <Grid
           container
-          rowSpacing={"16px"}
+          rowSpacing={"10px"}
           columnSpacing={"24px"}
           sx={{
             backgroundColor: "#38393A",
@@ -27,7 +27,7 @@ export default function Todo(props: any) {
             padding: "0px 4px 12px 4px",
           }}
         >
-          <Grid item xs={8} md={9}>
+          <Grid item xs={6} md={8}>
             <Typography
               variant="h4"
               sx={{ textDecoration: props.item.done ? "line-through" : null }}
@@ -36,7 +36,7 @@ export default function Todo(props: any) {
             </Typography>
           </Grid>
 
-          <Grid item xs={1} md={1}>
+          <Grid item xs={2} md={1} textAlign={"end"}>
             <IconButton
               onClick={() => {
                 props.deleteTodo(props.item.id, props.item.createdAt);
@@ -50,7 +50,7 @@ export default function Todo(props: any) {
               />
             </IconButton>
           </Grid>
-          <Grid item xs={1} md={1}>
+          <Grid item xs={2} md={1} textAlign={"end"}>
             <IconButton
               onClick={() => {
                 setEdit(true);
@@ -63,7 +63,7 @@ export default function Todo(props: any) {
               />
             </IconButton>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item xs={2} md={1} textAlign={"end"}>
             <IconButton
               onClick={() => {
                 if (props.item.done) {
