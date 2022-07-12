@@ -26,6 +26,3 @@ export interface TodoInterface {
     done?: boolean
 }
 
-export interface TodosInterface {
-    todos: TodoInterface[]
-}

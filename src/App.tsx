@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
+import { useState } from "react";
 import { UserContext } from "./Components/context";
 import { CognitoUserInterface } from "./lib/types";
 import Pages from "./Pages";
