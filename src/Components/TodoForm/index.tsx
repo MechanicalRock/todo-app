@@ -1,11 +1,4 @@
-import {
-  Box,
-  Button,
-  CircularProgress,
-  Grid,
-  TextField,
-  Typography,
-} from "@mui/material";
+import { Button, Grid, TextField, Typography } from "@mui/material";
 import { Auth } from "aws-amplify";
 import { useEffect, useState } from "react";
 import { useGlobalUserContext } from "../context";
@@ -230,16 +223,6 @@ export default function FeedbackForm() {
           </Grid>
         </Grid>
       </>
-
-      {loading && (
-        <>
-          <Grid item xs={12} textAlign={"center"}>
-            <Box sx={{ display: "flex" }}>
-              <CircularProgress />
-            </Box>
-          </Grid>
-        </>
-      )}
     </>
   );
 }

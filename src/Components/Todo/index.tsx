@@ -114,9 +114,19 @@ export default function Todo(props: any) {
                 onChange={(e) => {
                   setEditedBody(e.target.value);
                 }}
+                sx={{ width: "70%" }}
               />
             </Grid>
 
+            <Grid item xs={1}>
+              <IconButton
+                onClick={() => {
+                  setEdit(false);
+                }}
+              >
+                <CloseIcon color={"error"} />
+              </IconButton>
+            </Grid>
             <Grid item xs={2}>
               <IconButton
                 onClick={() => {
@@ -130,15 +140,6 @@ export default function Todo(props: any) {
                 }}
               >
                 <CheckCircleIcon color={"success"} />
-              </IconButton>
-            </Grid>
-            <Grid item xs={1}>
-              <IconButton
-                onClick={() => {
-                  setEdit(false);
-                }}
-              >
-                <CloseIcon color={"error"} />
               </IconButton>
             </Grid>
           </Grid>
