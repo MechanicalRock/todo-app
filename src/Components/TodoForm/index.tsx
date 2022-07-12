@@ -11,7 +11,7 @@ export default function FeedbackForm() {
   const [todos, setTodos] = useState<TodoInterface[] | undefined>([]);
   const { user, setUser } = useGlobalUserContext();
   const [token, setToken] = useState<string | undefined>("");
-  console.log(user);
+
   useEffect(() => {
     if (user?.signInUserSession) {
       setToken(user.signInUserSession.idToken.jwtToken);
@@ -42,7 +42,8 @@ export default function FeedbackForm() {
         }
       )
         .then((res) => res.json())
-        .then((data) => setTodos(data.Items));
+        .then((data) => setTodos(data.Items))
+        .catch((err) => err && errorMessage());
   };
 
   const saveTodo = () => {
@@ -63,9 +64,10 @@ export default function FeedbackForm() {
       )
         .then((res) => res.json())
         .then((message) => {
-          message === "Todo created" ? successMessage(message) : errorMessage();
+          message === "Todo created" && successMessage(message);
           getTodos();
-        });
+        })
+        .catch((err) => err && errorMessage());
   };
 
   const deleteTodo = (id: string, createdAt: string) => {
@@ -89,7 +91,7 @@ export default function FeedbackForm() {
           message === "Deleted" ? deleteMessage() : errorMessage();
           getTodos();
         })
-        .catch((err) => errorMessage());
+        .catch((err) => err && errorMessage());
   };
 
   const editTodo = (id: string, createdAt: string, editedTodo: string) => {
@@ -113,7 +115,8 @@ export default function FeedbackForm() {
         .then((message) => {
           message === "Changed Todo" ? successMessage(message) : errorMessage();
           getTodos();
-        });
+        })
+        .catch((err) => err && errorMessage());
   };
 
   const completeTodo = (
@@ -143,7 +146,8 @@ export default function FeedbackForm() {
         .then((message) => {
           message = !"Changed Todo" ? errorMessage() : null;
           getTodos();
-        });
+        })
+        .catch((err) => err && errorMessage());
   };
 
   const submit = () => {

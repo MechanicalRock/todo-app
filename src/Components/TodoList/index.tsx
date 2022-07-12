@@ -22,6 +22,7 @@ export default function TodoList(props: Props) {
           ? props.todos.map((todo: TodoInterface) => (
               <>
                 <Todo
+                  key={`${todo.id}${todo.createdAt}`}
                   todo={todo}
                   deleteTodo={props.deleteTodo}
                   editTodo={props.editTodo}
