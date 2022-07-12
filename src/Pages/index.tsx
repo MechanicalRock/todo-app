@@ -14,10 +14,6 @@ export default function Pages() {
 
   useEffect(() => {
     isUserSignedIn();
-    if (user) {
-      setAuth(true);
-      window.localStorage.setItem("auth", "true");
-    }
   }, []);
 
   useEffect(() => {
