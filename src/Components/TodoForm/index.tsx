@@ -165,19 +165,19 @@ export default function FeedbackForm() {
     <>
       <Toaster />
       <>
+        <Button onClick={signOut} color={"error"}>
+          Sign Out
+        </Button>
         <Grid
           container
           sx={{
-            marginRight: "40px",
-            marginLeft: "40px",
+            marginRight: "25px",
+            marginLeft: "25px",
             marginTop: "20px",
             marginBottom: "20px",
           }}
           spacing={3}
         >
-          <Button onClick={signOut} color={"error"}>
-            Sign Out
-          </Button>
           <Grid item xs={12} textAlign={"center"}>
             <Typography variant="h2">Today I need to:</Typography>
           </Grid>
@@ -186,7 +186,7 @@ export default function FeedbackForm() {
             <TextField
               variant="outlined"
               label={"To do"}
-              sx={{ width: "70%" }}
+              sx={{ width: "100%" }}
               value={todo}
               onChange={(event) => {
                 setTodo(event?.target.value);
@@ -205,7 +205,7 @@ export default function FeedbackForm() {
               Add Todo
             </Button>
           </Grid>
-          <Grid item xs={12} textAlign={"center"} sx={{ padding: "12px" }}>
+          <Grid item xs={12} textAlign={"center"}>
             <TodoList
               data={todos}
               getTodos={getTodos}
