@@ -9,7 +9,6 @@ import toast from "react-hot-toast";
 
 export default function Todo(props: any) {
   const [edit, setEdit] = useState(false);
-  const [done, setDone] = useState(false);
   const [editedBody, setEditedBody] = useState("");
   useEffect(() => {
     setEditedBody(props.item.body);
