@@ -1,4 +1,6 @@
 import { createContext, useContext } from "react"
-export const UserContext = createContext<any>({user: {}, setUser: () => {}})
+import {  UserContextInterface } from "../../lib/types"
+
+export const UserContext = createContext<UserContextInterface>({user: {}, setUser: () => {}})
 export const useGlobalUserContext = () => useContext(UserContext)
 

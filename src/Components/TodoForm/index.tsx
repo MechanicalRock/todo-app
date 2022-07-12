@@ -9,10 +9,10 @@ export default function FeedbackForm() {
   const [todo, setTodo] = useState("");
   const [todos, setTodos] = useState([{}]);
   const { user, setUser } = useGlobalUserContext();
-  const [token, setToken] = useState("");
-
+  const [token, setToken] = useState<string | undefined>("");
+  console.log(user);
   useEffect(() => {
-    if (user) {
+    if (user?.signInUserSession) {
       setToken(user.signInUserSession.idToken.jwtToken);
       getTodos();
     }
