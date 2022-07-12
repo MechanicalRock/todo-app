@@ -12,7 +12,6 @@ export default function LoginForm() {
   const handleSubmit = async (e: any) => {
     try {
       const user = await Auth.signIn(email, password);
-      toast.success("Signing you in!");
 
       setUser(user);
     } catch (error: any) {
@@ -40,7 +39,7 @@ export default function LoginForm() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             label={"Email"}
-            sx={{ width: "75%" }}
+            sx={{ width: "100%" }}
           />
         </Grid>
 
@@ -49,7 +48,7 @@ export default function LoginForm() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             label={"Password"}
-            sx={{ width: "75%" }}
+            sx={{ width: "100%" }}
           />
         </Grid>
 
