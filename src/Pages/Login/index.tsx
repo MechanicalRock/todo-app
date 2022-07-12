@@ -1,4 +1,5 @@
 import { Grid } from "@mui/material";
+import { Toaster } from "react-hot-toast";
 
 import LoginForm from "../../Components/LoginForm";
 

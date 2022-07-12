@@ -1,6 +1,7 @@
 import { Button, Grid, TextField, Typography } from "@mui/material";
 import { Auth } from "aws-amplify";
 import { useState } from "react";
+import { Toaster, toast } from "react-hot-toast";
 import { useGlobalUserContext } from "../../Components/context";
 
 export default function LoginForm() {
@@ -13,16 +14,19 @@ export default function LoginForm() {
     setLoading(true);
     try {
       const user = await Auth.signIn(email, password);
+      toast.success("Signing you in!");
       console.log(user);
       setUser(user);
-    } catch (error) {
+    } catch (error: any) {
       console.log(error);
+      toast.error("username and password invalid");
     }
     setLoading(false);
     // const newpassword = await Auth.completeNewPassword(user, password);
   };
   return (
     <>
+      <Toaster />
       <Grid
         container
         sx={{
