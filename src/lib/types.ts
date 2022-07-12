@@ -18,3 +18,14 @@ export interface UserContextInterface {
     user: CognitoUserInterface | null
     setUser: Dispatch<SetStateAction<CognitoUserInterface | null>>
 }
+
+export interface TodoInterface {
+    id?: string 
+    createdAt?: string 
+    body?: string 
+    done?: boolean
+}
+
+export interface TodosInterface {
+    todos: TodoInterface[]
+}

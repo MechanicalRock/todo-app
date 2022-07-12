@@ -4,10 +4,11 @@ import { useEffect, useState } from "react";
 import { useGlobalUserContext } from "../context";
 import TodoList from "../TodoList";
 import toast, { Toaster } from "react-hot-toast";
+import { TodoInterface, TodosInterface } from "../../lib/types";
 
 export default function FeedbackForm() {
-  const [todo, setTodo] = useState("");
-  const [todos, setTodos] = useState([{}]);
+  const [todo, setTodo] = useState<string>("");
+  const [todos, setTodos] = useState<TodoInterface[] | undefined>([]);
   const { user, setUser } = useGlobalUserContext();
   const [token, setToken] = useState<string | undefined>("");
   console.log(user);
@@ -207,7 +208,7 @@ export default function FeedbackForm() {
           </Grid>
           <Grid item xs={12} textAlign={"center"}>
             <TodoList
-              data={todos}
+              todos={todos}
               getTodos={getTodos}
               deleteTodo={deleteTodo}
               editTodo={editTodo}

@@ -9,7 +9,7 @@ export default function LoginForm() {
   const [password, setPassword] = useState("");
   const { setUser } = useGlobalUserContext();
 
-  const handleSubmit = async (e: any) => {
+  const handleSubmit = async () => {
     try {
       const user = await Auth.signIn(email, password);
       if (
@@ -20,8 +20,8 @@ export default function LoginForm() {
         await Auth.signIn(email, password);
       }
       setUser(user);
-    } catch (error: any) {
-      toast.error("username and password invalid");
+    } catch (error) {
+      error && toast.error("username and password invalid");
     }
   };
   return (

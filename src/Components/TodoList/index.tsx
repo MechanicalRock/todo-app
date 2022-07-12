@@ -1,16 +1,30 @@
 import { Grid } from "@mui/material";
+import { TodoInterface } from "../../lib/types";
 
 import Todo from "../Todo";
 
-export default function TodoList(props: any) {
+interface Props {
+  todos: TodoInterface[] | undefined;
+
+  deleteTodo: (id: string, createdAt: string) => void;
+  editTodo: (id: string, createdAt: string, editedTodo: string) => void;
+  getTodos: () => void;
+  completeTodo: (
+    id: string,
+    createdAt: string,
+    body: string,
+    done: boolean
+  ) => void;
+}
+export default function TodoList(props: Props) {
   return (
     <>
       <Grid container textAlign={"start"} rowSpacing={"32px"}>
-        {props.data
-          ? props.data.map((item: any) => (
+        {props.todos
+          ? props.todos.map((todo: TodoInterface) => (
               <>
                 <Todo
-                  item={item}
+                  todo={todo}
                   deleteTodo={props.deleteTodo}
                   editTodo={props.editTodo}
                   getTodos={props.getTodos}

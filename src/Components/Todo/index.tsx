@@ -6,13 +6,27 @@ import EditIcon from "@mui/icons-material/Edit";
 import CheckCircleIcon from "@mui/icons-material/CheckCircle";
 import CheckCircleOutlineOutlinedIcon from "@mui/icons-material/CheckCircleOutlineOutlined";
 import toast from "react-hot-toast";
+import { TodoInterface } from "../../lib/types";
 
-export default function Todo(props: any) {
+interface Props {
+  todo: TodoInterface;
+  deleteTodo: (id: string, createdAt: string) => void;
+  editTodo: (id: string, createdAt: string, editedTodo: string) => void;
+  getTodos: () => void;
+  completeTodo: (
+    id: string,
+    createdAt: string,
+    body: string,
+    done: boolean
+  ) => void;
+}
+
+export default function Todo(props: Props) {
   const [edit, setEdit] = useState(false);
-  const [editedBody, setEditedBody] = useState("");
+  const [editedBody, setEditedBody] = useState<string>("");
   useEffect(() => {
-    setEditedBody(props.item.body);
-  }, [props.item.body]);
+    props.todo.body && setEditedBody(props.todo.body);
+  }, [props.todo.body]);
 
   return (
     <Grid item xs={12}>
@@ -30,16 +44,18 @@ export default function Todo(props: any) {
           <Grid item xs={6} md={8}>
             <Typography
               variant="h4"
-              sx={{ textDecoration: props.item.done ? "line-through" : null }}
+              sx={{ textDecoration: props.todo.done ? "line-through" : null }}
             >
-              {props.item.body}
+              {props.todo.body}
             </Typography>
           </Grid>
 
           <Grid item xs={2} md={1} textAlign={"end"}>
             <IconButton
               onClick={() => {
-                props.deleteTodo(props.item.id, props.item.createdAt);
+                props.todo.id &&
+                  props.todo.createdAt &&
+                  props.deleteTodo(props.todo.id, props.todo.createdAt);
               }}
             >
               <DeleteForeverOutlinedIcon
@@ -66,25 +82,34 @@ export default function Todo(props: any) {
           <Grid item xs={2} md={1} textAlign={"end"}>
             <IconButton
               onClick={() => {
-                if (props.item.done) {
+                if (
+                  props.todo.done &&
+                  props.todo.id &&
+                  props.todo.createdAt &&
+                  props.todo.body
+                ) {
                   props.completeTodo(
-                    props.item.id,
-                    props.item.createdAt,
-                    props.item.body,
+                    props.todo.id,
+                    props.todo.createdAt,
+                    props.todo.body,
                     false
                   );
-                } else {
+                } else if (
+                  props.todo.id &&
+                  props.todo.createdAt &&
+                  props.todo.body
+                ) {
                   props.completeTodo(
-                    props.item.id,
-                    props.item.createdAt,
-                    props.item.body,
+                    props.todo.id,
+                    props.todo.createdAt,
+                    props.todo.body,
                     true
                   );
                   toast.success("Nice Work!");
                 }
               }}
             >
-              {!props.item.done ? (
+              {!props.todo.done ? (
                 <CheckCircleOutlineOutlinedIcon
                   sx={{
                     margin: "-6px",
@@ -129,12 +154,14 @@ export default function Todo(props: any) {
             <Grid item xs={2}>
               <IconButton
                 onClick={() => {
-                  props.editTodo(
-                    props.item.id,
-                    props.item.createdAt,
-                    editedBody
-                  );
-                  setEditedBody(props.item.body);
+                  props.todo.id &&
+                    props.todo.createdAt &&
+                    props.editTodo(
+                      props.todo.id,
+                      props.todo.createdAt,
+                      editedBody
+                    );
+                  props.todo.body && setEditedBody(props.todo.body);
                   setEdit(false);
                 }}
               >
