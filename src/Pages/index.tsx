@@ -1,6 +1,5 @@
-import { Button } from "@mui/material";
 import { Auth } from "aws-amplify";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Route, Routes } from "react-router-dom";
 import { useGlobalUserContext } from "../Components/context";
 import Login from "./Login";

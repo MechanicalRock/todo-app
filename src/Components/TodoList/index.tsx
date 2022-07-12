@@ -1,5 +1,5 @@
-import { Grid, Typography, Divider, Button } from "@mui/material";
-import { useState } from "react";
+import { Grid } from "@mui/material";
+
 import Todo from "../Todo";
 
 export default function TodoList(props: any) {

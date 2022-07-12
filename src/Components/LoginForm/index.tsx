@@ -2,16 +2,14 @@ import { Button, Grid, TextField, Typography } from "@mui/material";
 import { Auth } from "aws-amplify";
 import { useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
-import { useGlobalUserContext } from "../../Components/context";
+import { useGlobalUserContext } from "../context";
 
 export default function LoginForm() {
-  const [loading, setLoading] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const { setUser } = useGlobalUserContext();
 
   const handleSubmit = async (e: any) => {
-    setLoading(true);
     try {
       const user = await Auth.signIn(email, password);
       toast.success("Signing you in!");
@@ -20,8 +18,6 @@ export default function LoginForm() {
     } catch (error: any) {
       toast.error("username and password invalid");
     }
-    setLoading(false);
-    // const newpassword = await Auth.completeNewPassword(user, password);
   };
   return (
     <>

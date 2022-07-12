@@ -1,5 +1,5 @@
-import { Box, Grid } from "@mui/material";
-import React from "react";
+import { Grid } from "@mui/material";
+
 import TodoForm from "../../Components/TodoForm";
 
 export default function Main() {
